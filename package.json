@@ -1,0 +1,23 @@
+{
+  "name": "mean-crud",
+  "version": "1.0.0",
+  "description": "Our first mean project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JoseBretones/mean-crud.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JoseBretones/mean-crud/issues"
+  },
+  "homepage": "https://github.com/JoseBretones/mean-crud#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
