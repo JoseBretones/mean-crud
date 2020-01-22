@@ -4,13 +4,55 @@
             <div class="card">
                 <div class="card-content">
                     <form #teacherform="ngForm" (ngSubmit)="addTeacher(teacherform)">
-                        
+                        <input type="hidden" name="_id" #_id="ngModel" [(ngModel)]=teacherService.selectedTeacher._id>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input type="text" name="name" #name="ngModel" [(ngModel)]="teacherService.selectedTeacher.name" placeholder="Enter your name">
+                            </div>
+                            <div class="input-field col s12">
+                                <input type="text" name="subname" #subname="ngModel" [(ngModel)]="teacherService.selectedTeacher.subname" placeholder="Enter your subname">
+                            </div>
+                            <div class="input-field col s12">
+                                <input type="text" name="area" #area="ngModel" [(ngModel)]="teacherService.selectedTeacher.area" placeholder="Enter your area">
+                            </div>
+                            <div class="input-field col s12">
+                                <input type="number" name="salary" #salary="ngModel" [(ngModel)]="teacherService.selectedTeacher.salary" placeholder="Enter your salary">
+                            </div>
+                            <div class="card-action">
+                                <div class="input-field col s12">
+                                    <button class="btn" (click)="resetForm(teacherform)">Clean</button>
+                                    <button class="btn right">Save</button>
+                                </div>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
         <div class="col s7">
-
+            <table>
+                <thead>
+                    <th>Name</th>
+                    <th>Subname</th>
+                    <th>Area</th>
+                    <th>Operations</th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let teacher of teacherService.teachers">
+                        <td>{{teacher.name}}</td>
+                        <td>{{teacher.subname}}</td>
+                        <td>{{teacher.area}}</td>
+                        <td>
+                            <a (click)="editTeacher(teacher)">
+                                <i class="material-icons">edit</i>
+                            </a>
+                            <a (click)="deleteTeacher(teacher._id)">
+                                <i class="material-icons">delete</i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
