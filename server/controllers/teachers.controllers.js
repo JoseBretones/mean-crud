@@ -8,7 +8,12 @@ teacherCtrl.getTeachers = async (req, res)=>{
 };
 
 teacherCtrl.createTeacher = async (req, res)=>{
-    const teacher = new Teacher(req.body);
+    const teacher = new Teacher({
+        name:  req.body.name,
+        subname: req.body.subname,
+        area: req.body.area,
+        salary: req.body.salary
+    });
     await teacher.save();
     res.json({
         status : 'Teacher save'
@@ -23,7 +28,7 @@ teacherCtrl.editTeacher = async (req , res) =>{
     const { id } = req.params;
     const teacher = {
         name : req.body.name,
-        surname  : req.body.surname,
+        subname  : req.body.subname,
         area : req.body.area,
         salary : req.body.salary
     };
