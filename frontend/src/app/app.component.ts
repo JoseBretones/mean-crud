@@ -15,18 +15,18 @@ declare var M : any;
 export class AppComponent {
   public title = 'Teachers App';
   public user: User;
+  public user_register: User;
   public identity = null;
   public token;
 
   constructor(private userService: UserService){
     this.user = new User('','','','','','ROLE_USER','');
+    this.user_register = new User('','','','','','ROLE_USER','');
   }
 
   ngOnInit(){
     this.identity = this.userService.getIdentity();
     this.token = this.userService.getToken();
-    console.log(this.identity);
-    console.log(this.token);
   }
   logout(){
     localStorage.removeItem('identity');
@@ -43,11 +43,7 @@ export class AppComponent {
       password: form.value.password,
       gethash:true
     };
-    if(form.value.gethash){
-      console.log('Yes GetHash');
-    }else{
-      console.log("Not GetHash");
-      //Get datas user
+    //Get datas user
       this.userService.signUp(form.value)
         .subscribe(
           response =>{
@@ -70,8 +66,7 @@ export class AppComponent {
                       M.toast({html:'Error Login'});
                     }else{
                       localStorage.setItem('token',token);
-                      console.log(localStorage.getItem('token'));
-                      console.log(localStorage.getItem('identity'));
+                      this.user = new User('','','','','','ROLE_USER','');
                     }
                   },
                   err=>{
@@ -89,6 +84,29 @@ export class AppComponent {
             M.toast({html: 'Not Login'});
           }
         )
+  }
+
+  onSubmitRegister(){
+    const params ={
+      name: this.user_register.name,
+      subname: this.user_register.subname,
+      email: this.user_register.email,
+      password: this.user_register.password,
+      role: 'ROLE_USER',
+      image: ''
     }
+    this.userService.register(params).subscribe(
+      response=>{
+        const user = response['user'];
+        this.user_register = user;
+        if(!user._id){
+          M.toast({html:'Not register'});
+        }else{
+          M.toast({html:'User register succesfully. You can login use: '+this.user_register.email});
+          this.user_register = new User('','','','','','ROLE_USER','');
+        }
+      },
+      error=>{}
+      );
   }
 }

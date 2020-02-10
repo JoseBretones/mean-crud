@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Teacher } from '../models/teacher';
 
 
@@ -17,7 +17,13 @@ export class TeachersService {
   }
 
 getTeachers(){
-  return this.http.get(this.URL_API);
+  const httpOptions = {
+    headers: new HttpHeaders({
+        'Content-Type':'application/json',
+        'Authorization':localStorage.getItem('token')
+    })
+};
+  return this.http.get(this.URL_API, httpOptions);
 }
 
 createTeacher(teacher: Teacher){
